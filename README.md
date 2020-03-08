@@ -4,6 +4,7 @@ This project is my side-project.
 
 Using React, React hooks, React-router-dom, Material-UI, SCSS, etc.
 
+## CRA
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
