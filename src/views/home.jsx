@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
-// import Container from "@material-ui/core/Container";
+import Pagination from "@material-ui/lab/Pagination";
 import Products from "../components/products.jsx";
 
 const useStyles = makeStyles((theme) => ({
@@ -16,11 +16,21 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
     textAlign: "center",
     color: theme.palette.text.secondary
+  },
+  pagination: {
+    "& ul": {
+      justifyContent: "center"
+    }
   }
 }));
 
 export default function FullWidthGrid() {
   const classes = useStyles();
+
+  const [page, setPage] = React.useState(1);
+  const handleChange = (event, value) => {
+    setPage(value);
+  };
 
   return (
     <div className={classes.root}>
@@ -31,6 +41,14 @@ export default function FullWidthGrid() {
         <Grid item xs={12} lg={10}>
           <Paper className={classes.paper}>
             <Products></Products>
+            <Pagination
+              page={page}
+              onChange={handleChange}
+              className={classes.pagination}
+              count={10}
+              variant='outlined'
+              shape='rounded'
+            />
           </Paper>
         </Grid>
       </Grid>

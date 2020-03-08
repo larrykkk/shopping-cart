@@ -28,7 +28,9 @@ export default function CenteredGrid() {
   const classes = useStyles();
   return (
     <div className={classes.root}>
-      <div className={classes.logo}>Logo</div>
+      <Link to='/'>
+        <div className={classes.logo}>Logo</div>
+      </Link>
       <ul className={classes.ul}>
         <li>
           <Link to='/'>商品</Link>

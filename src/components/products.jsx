@@ -60,12 +60,7 @@ export default function ProductsComponent() {
       borderRadius: "5px"
     },
     link: {
-      display: "block",
-      marginTop: "5px",
-      "& span:first-of-type:hover": {
-        color: "dimgray",
-        textDecoration: "underline"
-      }
+      marginTop: "5px"
     },
     price: {
       color: "#ee4d2d",
@@ -91,8 +86,13 @@ export default function ProductsComponent() {
         <Link to={`/products/${item.sno}`}>
           <img className={classes.img} src={item.img} alt='Paella dish' />
         </Link>
-        <Link to={`/products/${item.sno}`} className={classes.link}>
-          <span>{item.name}</span>
+        <Link
+          to={`/products/${item.sno}`}
+          className={[classes.link, "link"].join(" ")}
+        >
+          <span className='link'>{item.name}</span>
+        </Link>
+        <Link to={`/products/${item.sno}`}>
           <span className={classes.price}>&nbsp;${item.price}</span>
         </Link>
       </div>
