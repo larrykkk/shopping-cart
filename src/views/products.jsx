@@ -1,42 +1,50 @@
-import React, { useState } from "react";
-import axios from "axios";
+import React, { useState, useEffect } from "react";
+// import axios from "axios";
 
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 
 import Product from "../components/Product.jsx";
+import More from "../components/More.jsx";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     maxWidth: "1620px",
     width: "100%",
-    margin: "0 auto"
+    margin: "0 auto",
   },
   paper: {
     padding: theme.spacing(2),
-    // textAlign: "center",
-    color: theme.palette.text.secondary
+    color: theme.palette.text.secondary,
   },
   pagination: {
     "& ul": {
-      justifyContent: "center"
-    }
-  }
+      justifyContent: "center",
+    },
+  },
 }));
 
-export default function() {
+export default function () {
   const classes = useStyles();
-  var id = window.location.pathname.replace("/products/", "");
-  console.log(id);
+
+
+  const [count, setCount] = useState(123);
+
+  useEffect(() => {
+    document.title = `You clicked ${count} times`;
+    return () => {
+      document.title = `You clicked ${0} times`;
+    };
+  });
 
   const [data, setData] = useState({
     sno: 1,
     name: "一台跑車",
+    price: 699990,
     img:
       "https://attach.mobile01.com/attach/202002/mobile01-4a336b931fcd78e3c9ec67453be6bd85.jpg",
-    price: 799,
     introduction:
       "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Totam nemo illo, corrupti, accusamus quia in ut aliquid accusantium doloribus beatae asperiores magnam illum consequatur culpa alias. Quod similique cumque hic.",
     features: [
@@ -44,9 +52,10 @@ export default function() {
       "動態寫入加速",
       "獨立NAND容錯陣列(RAIN)",
       "四層特定資料防護",
-      "AES 256 位元加密"
-    ]
+      "AES 256 位元加密",
+    ],
   });
+
   return (
     <div className={classes.root}>
       <Grid container spacing={2}>
@@ -56,6 +65,12 @@ export default function() {
         <Grid item xs={12}>
           <Paper className={classes.paper}>
             <Product data={data}></Product>
+          </Paper>
+        </Grid>
+
+        <Grid item xs={12}>
+          <Paper className={classes.paper}>
+            <More></More>
           </Paper>
         </Grid>
       </Grid>

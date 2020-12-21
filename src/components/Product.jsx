@@ -1,28 +1,31 @@
 import React, { useState } from "react";
+import Price from "../utils/price.js";
+
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
-
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: "flex"
+    display: "flex",
   },
   img: {
-    width: "100%"
+    width: "100%",
   },
   info: {
-    marginLeft: "15px"
+    marginLeft: "15px",
   },
   margin: {
     "&:not(:first-of-type)": {
-      margin: theme.spacing(0.5)
-    }
-  }
+      margin: theme.spacing(0.5),
+    },
+  },
 }));
 
-export default function(props) {
+export default function Product(props) {
   const classes = useStyles();
+  const price = Price.format(props.data.price);
+
   return (
     <div className={classes.root}>
       <Grid container spacing={2}>
@@ -36,6 +39,21 @@ export default function(props) {
         <Grid item xs={12} lg={6}>
           <h1>{props.data.name}</h1>
           <p>{props.data.introduction}</p>
+          <div>{price}</div>
+          <span>款式:</span>
+          <ul>
+            <li>
+              <Button variant='outlined' size='small' className={classes.margin}>
+                A
+              </Button>
+              <Button variant='outlined' size='small' className={classes.margin}>
+                B
+              </Button>
+              <Button variant='outlined' size='small' className={classes.margin}>
+                C
+              </Button>
+            </li>
+          </ul>
           <ul>
             {props.data.features.map((item, key) => (
               <li key={key}>{item}</li>

@@ -29,6 +29,7 @@ export default function FullWidthGrid() {
 
   const [page, setPage] = React.useState(1);
   const handleChange = (event, value) => {
+    // console.log(value);
     setPage(value);
   };
 
