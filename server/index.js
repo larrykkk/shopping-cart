@@ -6,7 +6,6 @@ const con = require("./db/db_connection.js")
 const {
   logErrors,
   clientErrorHandler,
-  errorHandler,
 } = require("./middleware/errorHandler.js")
 
 var index = require("./routes/index.js")
@@ -16,6 +15,9 @@ app.use(function (req, res, next) {
   req.con = con
   next()
 })
+
+app.use(express.json()) // for parsing application/json
+app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 
 app.use("/", index)
 app.use("/products", products)
