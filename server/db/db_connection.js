@@ -5,6 +5,7 @@ var con = mysql.createConnection({
   user: "larry",
   password: "5K6awa8qef",
   database: "shopping_cart",
+  multipleStatements: true,
 })
 
 con.connect(function (err) {

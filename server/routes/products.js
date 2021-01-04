@@ -1,33 +1,45 @@
 var express = require("express")
 var router = express.Router()
+var dayjs = require("dayjs")
 
-router.get("/", function (req, res, next) {
+router.get("/", async function (req, res, next) {
   var db = req.con
 
-  // try {
-  // } catch (error) {}
-
-  db.query("SELECT * FROM productss", function (err, rows) {
-    if (err) {
-      return next(err.sqlMessage)
+  db.query(
+    "SELECT * FROM products;SELECT COUNT(id) FROM products",
+    (err, rows) => {
+      if (err) {
+        return next(err.sqlMessage)
+      }
+      const [search_result, [counts]] = rows
+      res.send({
+        payload: {
+          search_result,
+          counts: counts["COUNT(id)"],
+        },
+      })
     }
-    var data = rows
-    console.log(123)
-  })
+  )
 })
 
 router.post("/", function (req, res, next) {
   var db = req.con
-  db.query("SELECT * FROM products", function (err, rows) {
-    if (err) {
-      return next(err.sqlMessage)
+  const { name, is_public, price, description, img } = req.body
+  const create_time = dayjs().format("YYYY-MM-DDTHH:mm:ss")
+  db.query(
+    `INSERT INTO products (name, is_public, price, description, img,  create_time) VALUES (?,?,?,?,?,?);`,
+    [name, is_public, price, description, img, create_time],
+    function (err, rows) {
+      if (err) {
+        return next(err.sqlMessage)
+      }
+      res.send({
+        payload: {
+          id: rows.insertId,
+        },
+      })
     }
-    var data = rows
-    console.log(123)
-    res.send({
-      data,
-    })
-  })
+  )
 })
 
 router.put("/", function (req, res, next) {
