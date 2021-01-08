@@ -1,4 +1,5 @@
 var express = require("express")
+var mysql = require("mysql")
 var router = express.Router()
 var dayjs = require("dayjs")
 
@@ -42,8 +43,21 @@ router.post("/", function (req, res, next) {
   )
 })
 
-router.put("/", function (req, res, next) {
-  res.send("Hello World!")
+router.put("/:id", function (req, res, next) {
+  var db = req.con
+  var id = req.params.id
+  var query = mysql.format("UPDATE products SET ? WHERE ?", [req.body, { id }])
+
+  db.query(query, function (err, rows) {
+    if (err) {
+      return next(err.sqlMessage)
+    }
+    res.send({
+      payload: {
+        id: rows.insertId,
+      },
+    })
+  })
 })
 
 router.delete("/", function (req, res, next) {
