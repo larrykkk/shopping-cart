@@ -60,8 +60,20 @@ router.put("/:id", function (req, res, next) {
   })
 })
 
-router.delete("/", function (req, res, next) {
-  res.send("login?")
+router.delete("/:id", function (req, res, next) {
+  var db = req.con
+  var id = req.params.id
+  let query = `DELETE FROM products WHERE id = ${id}`
+  db.query(query, function (err, rows) {
+    if (err) {
+      return next(err.sqlMessage)
+    }
+    res.send({
+      payload: {
+        success: !!rows.affectedRows,
+      },
+    })
+  })
 })
 
 module.exports = router
