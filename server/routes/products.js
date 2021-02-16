@@ -23,6 +23,21 @@ router.get("/", async function (req, res, next) {
   )
 })
 
+router.get("/:id", function (req, res, next) {
+  var db = req.con
+  var id = req.params.id
+
+  db.query("SELECT * FROM products WHERE id = ?", [id], function (err, rows) {
+    if (err) {
+      return next(err.sqlMessage)
+    }
+
+    res.send({
+      payload: { ...rows[0] },
+    })
+  })
+})
+
 router.post("/", function (req, res, next) {
   var db = req.con
   const { name, is_public, price, description, img } = req.body

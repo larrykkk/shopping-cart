@@ -1,14 +1,10 @@
-import React, { Suspense, lazy } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import React, { Suspense, lazy } from "react"
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
 
-// import Index from "./views/index.jsx";
-// import Header from "./components/header.jsx";
-// import Home from "./views/home.jsx";
-// import Home from "./views/home.jsx";
-
-const Home = lazy(() => import("./views/home.jsx"));
-const Header = lazy(() => import("./components/header.jsx"));
-const Products = lazy(() => import("./views/products.jsx"));
+const Home = lazy(() => import("./containers/home.jsx"))
+const Header = lazy(() => import("./components/header.jsx"))
+const Products = lazy(() => import("./containers/products.jsx"))
+const About = lazy(() => import("./containers/About.jsx"))
 
 export default function App() {
   return (
@@ -16,22 +12,18 @@ export default function App() {
       <Suspense fallback={<div>Loading...</div>}>
         <Header></Header>
         <Switch>
-          <Route exact path='/'>
+          <Route exact path="/">
             <Home />
           </Route>
-          <Route path='/products/:id'>
+          <Route path="/products/:id">
             <Products />
           </Route>
-          <Route path='/about'>
+          <Route path="/about">
             <About />
           </Route>
-          <Route path='/login'>login</Route>
+          <Route path="/login">login</Route>
         </Switch>
       </Suspense>
     </Router>
-  );
-}
-
-function About() {
-  return <h2>test</h2>;
+  )
 }

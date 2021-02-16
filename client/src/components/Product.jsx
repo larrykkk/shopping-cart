@@ -1,9 +1,12 @@
-import React, { useState } from "react";
-import Price from "../utils/price.js";
+import React, { useEffect, useState } from "react"
+import { useParams } from "react-router-dom"
+import axios from "../axios.js"
 
-import Grid from "@material-ui/core/Grid";
-import Button from "@material-ui/core/Button";
-import { makeStyles } from "@material-ui/core/styles";
+import Price from "../utils/price.js"
+
+import Grid from "@material-ui/core/Grid"
+import Button from "@material-ui/core/Button"
+import { makeStyles } from "@material-ui/core/styles"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,12 +23,26 @@ const useStyles = makeStyles((theme) => ({
       margin: theme.spacing(0.5),
     },
   },
-}));
+}))
 
 export default function Product(props) {
-  const classes = useStyles();
-  const price = Price.format(props.data.price);
+  const classes = useStyles()
+  const price = Price.format(props.data.price)
 
+  const { id } = useParams()
+  const [productDetail, setProductDetail] = useState({})
+
+  async function fetchData() {
+    const res = await axios.Products.get(id)
+    console.log(res)
+    if(res.data.payload){
+
+    }
+    setProductDetail()
+  }
+  useEffect(() => {
+    fetchData()
+  }, [])
   return (
     <div className={classes.root}>
       <Grid container spacing={2}>
@@ -43,13 +60,25 @@ export default function Product(props) {
           <span>款式:</span>
           <ul>
             <li>
-              <Button variant='outlined' size='small' className={classes.margin}>
+              <Button
+                variant="outlined"
+                size="small"
+                className={classes.margin}
+              >
                 A
               </Button>
-              <Button variant='outlined' size='small' className={classes.margin}>
+              <Button
+                variant="outlined"
+                size="small"
+                className={classes.margin}
+              >
                 B
               </Button>
-              <Button variant='outlined' size='small' className={classes.margin}>
+              <Button
+                variant="outlined"
+                size="small"
+                className={classes.margin}
+              >
                 C
               </Button>
             </li>
@@ -60,25 +89,25 @@ export default function Product(props) {
             ))}
           </ul>
           <Button
-            variant='outlined'
-            size='small'
-            color='primary'
+            variant="outlined"
+            size="small"
+            color="primary"
             className={classes.margin}
           >
             買
           </Button>
           <Button
-            variant='outlined'
-            size='small'
-            color='primary'
+            variant="outlined"
+            size="small"
+            color="primary"
             className={classes.margin}
           >
             存
           </Button>
           <Button
-            variant='outlined'
-            size='small'
-            color='primary'
+            variant="outlined"
+            size="small"
+            color="primary"
             className={classes.margin}
           >
             喜歡
@@ -88,5 +117,5 @@ export default function Product(props) {
       {/* <div>輪播</div>
       <div className={classes.info}></div> */}
     </div>
-  );
+  )
 }

@@ -1,4 +1,5 @@
 const express = require("express")
+var cors = require("cors")
 const app = express()
 const port = 3001
 
@@ -11,6 +12,7 @@ const {
 var index = require("./routes/index.js")
 var products = require("./routes/products.js")
 
+app.use(cors())
 app.use(function (req, res, next) {
   req.con = con
   next()
